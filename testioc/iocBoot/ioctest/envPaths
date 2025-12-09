@@ -1,0 +1,3 @@
+epicsEnvSet("IOC","ioctest")
+epicsEnvSet("TOP","/home/pla/modules/testioc")
+epicsEnvSet("EPICS_BASE","/home/pla/base")

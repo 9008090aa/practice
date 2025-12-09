@@ -1,0 +1,64 @@
+record(stringin, "$(dev):Idn")
+{
+	field(DESC, "$(dev) identification")
+	field(DTYP, "stream")
+	field(INP, "@Keysight34401a.proto getIdn $(dev)")
+	field(PINI, "YES")
+}
+record(ai, "$(dev):Meas")
+{
+	field(DESC, "$(dev) get measurement")
+	field(DTYP, "stream")
+	field(INP, "@Keysight34401a.proto meas $(dev)")
+	field(SCAN, "1 second")
+}
+
+record(stringin, "$(dev):SetRemote")
+{
+    field(DESC, "$(dev) Set remote mode")
+    field(DTYP, "stream")
+    field(INP, "@Keysight34401a.proto setRemote $(dev)")
+	field(PINI, "YES") # 起動時に実行
+}
+record(bi, "$(dev):Elc_Flw_Type_RB")
+{
+	field(DESC, "$(dev) electron flow type ReadBack")
+	field(ZNAM, "DC") # Zero Name: バイナリ状態が0である場合にDCと表示するように設定
+	field(ONAM, "AC") # One Name: バイナリ状態が1である場合にACと表示するように設定
+}
+
+record(mbbi, "$(dev):Unit_RB") # マルチバイトバイナリ入力型
+{
+	field(DESC, "$(dev) Unit ReadBack")
+	field(DTYP, "stream")
+	field(INP, "@Keysight34401a.proto getMode($(dev)) $(dev)")
+	field(SCAN, "2 second") # 2秒毎にスキャン
+	field(ZRVL, "0") # Zero value: 0を電圧モードに設定
+	field(ZRST, "V") # Zero string: 電圧モードの単位をVに設定
+	field(ONVL, "1") # One value: 1を電流モードに設定
+	field(ONST, "A") # One string: 電流モードの単位をAに設定
+	field(FLNK, "$(dev):Meas_Unit_CL") # 次に処理するレコードを指定
+}
+
+record(stringin, "$(dev):Meas_Unit_CL") # スカラー計算出力型
+{
+    field(DESC, "Measurement Unit RB Closed Loop")
+    field(INP, "$(dev):Unit_RB") # 入力先フィールド: 上のmbbiレコードの値を参照する
+}
+record(mbbo, "$(dev):Mode_SP") {
+	field(DESC, "$(dev) mode SetPoint")
+	field(DTYP, "stream")
+	field(OUT,  "@Keysight34401a.proto setMode($(dev)) $(dev)") # 出力リンク先
+	field(ZRVL, "0") # Zero value: 0を電圧モードに設定
+	field(ZRST, "Voltage") # Zero string: 電流モードの単位をAに設定
+	field(ONVL, "1") # One value: 1を電流モードに設定
+	field(ONST, "Current") # One string: 電流モードの単位をAに設定
+}
+record(bo, "$(dev):Elc_Flw_Type_SP")
+{
+	field(DESC, "$(dev) electron flow type SetPoint")
+	field(DTYP, "stream")
+	field(OUT, "@Keysight34401a.proto setType($(dev)) $(dev)")
+	field(ZNAM, "DC") # 0の場合にDCと表示
+	field(ONAM, "AC") # 1の場合にACと表示
+}

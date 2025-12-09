@@ -1,0 +1,29 @@
+Terminator = CR LF;
+Terminator = LF;
+ReadTimeout = 100;
+WriteTimeout = 100;
+PollPeriod = 100;
+ReplyTimeout = 1000;
+LockTimeout = 5000;
+ExtraInput = Ignore;
+getIdn {
+        out "*IDN?";
+        in "%39c";
+}
+meas {
+        out "READ?";
+        in "%e";
+}
+setRemote{
+    out "SYST:REM";   
+}
+getMode {
+        out "CONF?";
+        in "\"%{VOLT|CURR}%(\$1:Elc_Flw_Type_RB){ |:AC }%*39c";
+}
+setMode {
+	out "CONF:%{VOLT|CURR}:%(\$1:Elc_Flw_Type_SP){DC|AC}";
+}
+setType{
+	out "CONF:%(\$1:Mode_SP){VOLT|CURR}:%{DC|AC} %(\$1:Elc_Flw_Type_SP){DEF|1}, DEF";
+}

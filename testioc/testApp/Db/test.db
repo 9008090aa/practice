@@ -1,0 +1,15 @@
+record(ai, "test:pv1")
+{
+    field(VAL, 49)
+}
+record(ai, "test:pv2")
+{
+    field(VAL, 51)
+}
+record(calc,"test:add")
+{
+    field(SCAN,"1 second")
+    field(INPA, "test:pv1.VAL")
+    field(INPB, "test:pv2.VAL")
+    field("CALC", "A + B")
+}

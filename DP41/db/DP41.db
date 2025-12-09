@@ -1,0 +1,7 @@
+record(stringin,"DP41:DP41Record")
+{
+    field(DESC, "String Gauge Reading")
+    field(SCAN, "1 second")
+    field(DTYP, "DP41Support")
+    field(INP, "#L0 A0 @0")
+}
