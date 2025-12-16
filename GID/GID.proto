@@ -1,5 +1,0 @@
-Terminator = CR LF;
-ExtraInput = Ignore;
-readGID {
-	in "COM +%f ABN ABN NOR";
-}

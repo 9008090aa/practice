@@ -1,6 +1,0 @@
-record(ai, "GIDInput")  {
-    field(DESC, "GID Input Values")
-    field(SCAN, "I/O Intr")
-    field(DTYP, "stream")
-    field(INP, "@GID.proto readGID L0")
-}
